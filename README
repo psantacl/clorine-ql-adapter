@@ -1,17 +1,26 @@
 # clorine-ql-adapter
 
-FIXME: write description
+This little project allows you to use database connectin pooling via Clorine with ClojureQL.
 
 ## Usage
 
-FIXME: write
+  (rn.clorine.core/register-connection! :chicken
+                                        {:driver-class-name  "org.postgresql.Driver"
+                                         :db-port 5432
+                                         :db-name "feedback_development"
+                                         :user "some-user"
+                                         :password "some-password"
+                                         :url  "jdbc:postgresql://localhost:5432/feedback_development"
+                                         })
+  (with-connection :chicken
+    (deref (clojureql.core/table :users)))
 
-## Installation
+  (with-connection :chicken
+    (sql/with-query-results rs ["SELECT now();"]
+      (doall rs)))
 
-FIXME: write
 
 ## License
 
-Copyright (C) 2010 FIXME
-
+Information Wants to be Free
 Distributed under the Eclipse Public License, the same as Clojure.
